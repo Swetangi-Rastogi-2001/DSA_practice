@@ -1,17 +1,22 @@
-void helper(vector<int> num, int index, int n, int sum, vector<int> &ans){
-    if(index==n){
-        ans.push_back(sum);
-        return;
+class Solution {
+public:
+    void helper(vector<int> nums, int index, int n, vector<int> temp, vector<vector<int>> &ans){
+        ans.push_back(temp);
+        for(int i=index;i<n;i++){
+            if(i!=index&&nums[i]==nums[i-1])
+                continue;
+            
+            temp.push_back(nums[i]);
+            helper(nums, i+1, n, temp , ans);
+            temp.pop_back();
+        }
     }
-    helper(num, index+1, n, sum+num[index], ans);
-    helper(num, index+1, n, sum, ans);
-}
-
-vector<int> subsetSum(vector<int> &num)
-{
-    // Write your code here.
-    vector<int> ans;
-    helper(num, 0, num.size(), 0, ans);
-    sort(ans.begin(), ans.end());
-    return ans;
-}
+    
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<int> temp;
+        vector<vector<int>> ans;
+        helper(nums, 0, nums.size(), temp, ans );
+        return ans;
+    }
+};
