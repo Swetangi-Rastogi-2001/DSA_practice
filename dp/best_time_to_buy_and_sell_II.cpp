@@ -104,3 +104,25 @@ public:
         return dp[1];
     }
 };
+
+
+//USING 4 VARIABLE
+class Solution {
+public:
+       
+    int maxProfit(vector<int>& prices) {
+        int n= prices.size();
+        
+
+        int dp0=0, dp1=0, temp0=0, temp1=0;
+        
+        for(int i=n-1;i>=0;i--){
+            temp1= max(-prices[i]+dp0, dp1);
+            temp0= max(prices[i]+dp1, dp0);
+            dp0=temp0;
+            dp1=temp1;
+        }
+        
+        return dp1;
+    }
+};
